@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,3 +48,5 @@ Route::resource('/module', ModuleController::class);
 Route::get('/module/{modulo}', function($modulo) {
     return view(strtolower($modulo));
 })->whereIn('modulo', ['DSW', 'DEW', 'DOR', 'DPL', 'EMR'])->name('module');
+
+Route::resource('/product', ProductController::class);
