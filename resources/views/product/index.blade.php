@@ -1,3 +1,9 @@
+@extends('master')
+
+@section('title', 'Lista de productos')
+
+@section('content')
+
 <a href="{{ route('product.create')}}">Crear producto</a>
 <table>
   <thead>
@@ -18,8 +24,16 @@
           <td>{{ $product->country }}</td>
           <td>
             <a href="{{ route('product.show', ['product' => $product])}}">Mostrar</a>
+            <a href="{{ route('product.edit', ['product' => $product])}}">Editar</a>
+            <form action="{{ route('product.destroy', ['product' => $product])}}" method="POST">
+              @csrf
+              @method('DELETE')
+              <button type="submit">Eliminar</button>
+            </form>
           </td>
         </tr>
     @endforeach
   </tbody>
 </table>
+
+@endsection

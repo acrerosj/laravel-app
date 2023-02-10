@@ -26,7 +26,7 @@ Route::get('/hi', function() {
 // Route::get('/mundo', function() {
 //     return view('hola');
 // });
-Route::view('/world', 'hola', ['name'=>'Pepe'])->name('world');
+//Route::view('/world', 'hola', ['name'=>'Pepe'])->name('world');
 
 // Route::get('/user/{id}/{name}', function($id, $name) {
 //     return 'Usuario: ' . $id . ' - ' . $name;

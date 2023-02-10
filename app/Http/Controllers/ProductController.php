@@ -36,7 +36,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return ($request);
+        $validated = $request->validate([
+            'name' => 'required|min:5',
+            'price' => 'required|gt:0',
+            'country' => 'required'
+        ]);
+
+        $product = new Product;
+        $product->name = $request['name'];
+        $product->price = $request['price'];
+        $product->country = $request['country'];
+        $product->save();
+        //return view('product.index', ['products' => Product::all()]);
+        return redirect(route('product.index'));
+
     }
 
     /**
@@ -58,7 +71,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('product.edit', ['product' => $product]);
     }
 
     /**
@@ -70,7 +83,18 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|min:5',
+            'price' => 'required|gt:0',
+            'country' => 'required'
+        ]);
+
+        //$product = Product::find($product->id);
+        $product->name = $request['name'];
+        $product->price = $request['price'];
+        $product->country = $request['country'];
+        $product->save();
+        return redirect(route('product.index'));
     }
 
     /**
@@ -79,8 +103,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Request $request, Product $product)
     {
-        //
+        //$name = $product->name;
+        $product->delete();
+        
+        //$request->session()->flash('status', 'Producto eliminado');
+        return redirect(route('product.index'))->with(['status' => 'Se ha borrado satisfactoriamente el producto ' . $product->name]);
     }
 }
