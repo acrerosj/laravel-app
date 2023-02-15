@@ -29,6 +29,24 @@
   @enderror
 </p>
 <p>
+  <label for="">Categoría</label>
+  <select name="category">
+    @foreach ($categories as $category)
+      <option 
+        value="{{$category->id}}"
+      @if ( $category->id == old('category', $product->category_id) )
+          selected
+      @endif    
+        >
+        {{$category->name}}
+      </option>        
+    @endforeach
+  </select>
+  @error('category')
+    <span class="text-danger">{{$message}}</span>
+  @enderror
+</p>
+<p>
   <button type="submit">Modificar</button>
 </p>
 </form>

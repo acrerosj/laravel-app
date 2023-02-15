@@ -1,14 +1,18 @@
 @extends('master')
 
-@section('title', 'Lista de productos')
+@section('title', __('List of products'))
 
 @section('content')
 
 <a href="{{ route('product.create')}}">Crear producto</a>
+@isset($category)
+  <h2>Productos de la categoria {{ $category->name }}</h2>
+@endisset
 <table>
   <thead>
     <tr>
       <th>#</th>
+      <th>{{__('product.Category')}}</th>
       <th>Nombre</th>
       <th>Precio</th>
       <th>País</th>
@@ -19,6 +23,11 @@
     @foreach ($products as $product)
         <tr>
           <td>{{ $product->id }}</td>
+          <td>
+            <a href="{{ route('product.indexCategory', ['category' => $product->category])}}">
+              {{ $product->category->name }}
+            </a>
+          </td>
           <td>{{ $product->name }}</td>
           <td>{{ $product->price }}€</td>
           <td>{{ $product->country }}</td>

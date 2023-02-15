@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,19 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //return Product::all();
-        return view('product.index', ['products' => Product::all()]);
+        $product = Product::all();
+        return view('product.index', ['products' => $product]);
+    }
+
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexCategory(Category $category)
+    {
+        $product = $category->products;
+        return view('product.index', ['products' => $product, 'category' => $category]);
     }
 
     /**
@@ -24,8 +36,8 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('product.create');
+    {        
+        return view('product.create', ['categories' => Category::all()]);
     }
 
     /**
@@ -39,13 +51,15 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:5',
             'price' => 'required|gt:0',
-            'country' => 'required'
+            'country' => 'required',
+            'category' => 'required'
         ]);
 
         $product = new Product;
         $product->name = $request['name'];
         $product->price = $request['price'];
         $product->country = $request['country'];
+        $product->category_id = $request['category'];
         $product->save();
         //return view('product.index', ['products' => Product::all()]);
         return redirect(route('product.index'));
@@ -71,7 +85,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('product.edit', ['product' => $product]);
+        return view('product.edit', ['product' => $product, 'categories' => Category::all()]);
     }
 
     /**
@@ -86,13 +100,15 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:5',
             'price' => 'required|gt:0',
-            'country' => 'required'
+            'country' => 'required',
+            'category' => 'required'
         ]);
 
         //$product = Product::find($product->id);
         $product->name = $request['name'];
         $product->price = $request['price'];
         $product->country = $request['country'];
+        $product->category_id = $request['category'];
         $product->save();
         return redirect(route('product.index'));
     }

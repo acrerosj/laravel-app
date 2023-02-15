@@ -49,4 +49,5 @@ Route::get('/module/{modulo}', function($modulo) {
     return view(strtolower($modulo));
 })->whereIn('modulo', ['DSW', 'DEW', 'DOR', 'DPL', 'EMR'])->name('module');
 
+Route::get('/product/category/{category}', [ProductController::class, 'indexCategory'])->name('product.indexCategory');
 Route::resource('/product', ProductController::class);

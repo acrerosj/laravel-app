@@ -28,6 +28,17 @@
   @enderror
 </p>
 <p>
+  <label for="">Categoría</label>
+  <select name="category" value="{{ old('category') }}">
+    @foreach ($categories as $category)
+      <option value="{{$category->id}}">{{$category->name}}</option>        
+    @endforeach
+  </select>
+  @error('category')
+    <span class="text-danger">{{$message}}</span>
+  @enderror
+</p>
+<p>
   <button type="submit">Crear</button>
 </p>
 </form>
